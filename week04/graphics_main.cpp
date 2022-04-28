@@ -6,7 +6,7 @@
 
 void WindowExit (Fl_Widget* widget, void* user) {
 
-    global_io_flush();
+    std::cout.flush();
     exit(0);
 }
 
@@ -25,9 +25,6 @@ f64 SlopingCos(f64 x) {
 
 
 i32 main(i32 argc, const char** argv) {
-
-    byte mem[512];
-    init_global_print(make_linear_allocator(mem, 512));
 
     try {
 
@@ -72,16 +69,16 @@ i32 main(i32 argc, const char** argv) {
 
     }
     catch(std::exception& e) {
-        global_print("s", e.what());
-	    global_io_flush();
+        std::cout << e.what();
+        std::cout.flush();
 		return 1;
 	}
 	catch(...) {
-        global_print("s", "uknown exception caught");
-	    global_io_flush();
+        std::cout << "uknown exception caught";
+        std::cout.flush();
 		return 2;
 	}
 
-    global_io_flush();
+    std::cout.flush();
     return 0;
 }

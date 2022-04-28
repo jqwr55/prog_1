@@ -22,16 +22,12 @@ void MakeGrid(std::vector<Line*>& lines, Point topLeft, Point bottomRight, u32 x
     }
 }
 void WindowExit (Fl_Widget* widget, void* user) {
-
-    global_print("s", "Exiting\n");
-    global_io_flush();
+    
+    std::cout << "Exiting\n";
     exit(0);
 }
 
 i32 main(i32 argc, const char** argv) {
-
-    byte mem[512];
-    init_global_print(make_linear_allocator(mem, 512));
 
     try {
 
@@ -64,8 +60,8 @@ i32 main(i32 argc, const char** argv) {
 
         for(auto i : frens) myWindow.attach(*i);
 
-        global_print("s", "Press the exit to exit\n");
-        global_io_flush();
+        std::cout << "Press the exit to exit\n";
+        std::cout.flush();
         i32 px = 0;
         i32 py = 0;
 
@@ -91,16 +87,16 @@ i32 main(i32 argc, const char** argv) {
         }
     }
     catch(std::exception& e) {
-        global_print("s", e.what());
-	    global_io_flush();
+        std::cout << e.what() << '\n';
+	    std::cout.flush();
 		return 1;
 	}
 	catch(...) {
-        global_print("s", "uknown exception caught");
-	    global_io_flush();
+        std::cout << "uknown exception caught\n";
+	    std::cout.flush();
 		return 2;
 	}
 
-    global_io_flush();
+    std::cout.flush();
     return 0;
 }

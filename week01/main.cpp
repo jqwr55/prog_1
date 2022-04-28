@@ -6,14 +6,12 @@
 
 void WindowExit (Fl_Widget* widget, void* user) {
 
-    global_io_flush();
     exit(0);
 }
 
 i32 main(i32 argc, const char** argv) {
 
     byte mem[512];
-    init_global_print(make_linear_allocator(mem, 512));
 
 	try {
 		i32 xmax = 600;
@@ -331,7 +329,6 @@ i32 main(i32 argc, const char** argv) {
 			ellipse.set_color(Color::dark_red);
 			Mark mark {Point{100, 200}, 'x'};
 
-			global_io_flush();
 			*local_print(mem, 512, "sicisici", "screen size: ", x_max(), '*', y_max(), "; window size: ", myWindow.x_max(), '*', myWindow.y_max()) = 0;
 			std::string str((const char*)mem);
 			Text sizes {Point{100, 20}, str};
@@ -355,14 +352,11 @@ i32 main(i32 argc, const char** argv) {
 
 	}
 	catch(std::exception& e) {
-	    global_io_flush();
 		return 1;
 	}
 	catch(...) {
-	    global_io_flush();
 		return 2;
 	}
 
-    global_io_flush();
     return 0;
 }

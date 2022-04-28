@@ -25,7 +25,7 @@ std::ostream& operator << (std::ostream& os, const Item& i) {
     os << i.name << ' ' << i.iid << ' ' << i.value;
     return os;
 }
-bool CompareStrings(const std::string& s0, const std::string& s1) {
+bool cmp_strs(const std::string& s0, const std::string& s1) {
 
     for (int i = 0; i< s0.length(); ++i) {
         if (i == s1.length()) return false;
@@ -68,7 +68,7 @@ i32 main() {
 
     std::sort(vi.begin(), vi.end(),
         [](const Item& i0, const Item& i1) {
-            return CompareStrings(i0.name, i1.name);
+            return cmp_strs(i0.name, i1.name);
         });
     std::sort(vi.begin(), vi.end(),
         [](const Item& i0, const Item& i1) {

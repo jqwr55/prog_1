@@ -1,15 +1,16 @@
 #include <common.h>
 #include <exception>
 #include <string>
+#include <iostream>
 
 class B1 {
 
     public:
         void f() {
-            global_print("s", "B1::f\n");
+            std::cout << "B1::f\n";
         }
         virtual void vf() {
-            global_print("s", "B1::vf\n");
+            std::cout << "B1::vf\n";
         }
     private:
 };
@@ -28,9 +29,6 @@ class D1 : public B1 {
 
 i32 main(i32 argc, const char** argv) {
 
-    byte mem[512];
-    init_global_print(make_linear_allocator(mem, 512));
-
     B1 b1;
     b1.f();
     b1.vf();
@@ -43,8 +41,7 @@ i32 main(i32 argc, const char** argv) {
     b1Ref.f();
     b1Ref.vf();
 
-    
+    std::cout.flush();
 
-    global_io_flush();
     return 0;
 }

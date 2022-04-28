@@ -2,9 +2,14 @@
 #include <cstddef>
 #include <memory>
 
-byte *global_malloc_base;
-malloc_handler_t global_out_of_memory_handler;
+
+// ----------------global-symbols----------------
+byte* global_malloc_base;
+byte* global_malloc_end;
+malloc_handler_t* global_out_of_memory_handler;
+void* global_out_of_memory_user;
 LinearAllocator io;
+// ----------------global-symbols----------------
 
 u64 Kilobyte(u64 n) {
     return n * KILO_BYTE;
@@ -403,7 +408,7 @@ MemoryBlockHeader *search_free_block(u32 size) {
 }
 
 // mutates shared global state
-void init_global_malloc(void *base_, u32 size, malloc_handler_t handler) {
+void init_global_malloc(void *base_, u32 size, malloc_handler_t* handler, void* user) {
     
     //null pointers are reserved
     global_malloc_base = (byte*)base_;
@@ -445,7 +450,7 @@ void* global_malloc(u32 size) {
         return free_block + 1;
     }
 
-    global_out_of_memory_handler();
+    global_out_of_memory_handler(global_out_of_memory_user);
     return nullptr;
 }
 // mutates shared global state
@@ -1099,7 +1104,25 @@ void init_global_print(LinearAllocator memory) {
     ASSERT(memory.top == 0);
     io = memory;
 }
-void print_out_of_memory() {
+// mutates shared global state, calls mmap
+void print_out_of_memory(void* user) {
+
+    auto extra = mmap(global_malloc_end, Kilobyte(256), PROT_WRITE | PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
+    ASSERT(((byte*)extra - global_malloc_base) < ~u32(0));
+    global_malloc_end += Kilobyte(256);
+
+    auto block = (MemoryBlockHeader*)(global_malloc_base+1);
+    while(get_block_ptr(global_malloc_base, block->right_ptr)) {
+        block = get_block_ptr(global_malloc_base, block->right_ptr);
+    }
+    ASSERT(get_block_ptr(global_malloc_base, block->right_ptr));
+    auto extraBlock = (MemoryBlockHeader*)extra;
+    set_free_bit(extraBlock);
+    set_size_in_block(extraBlock, Kilobyte(256) - sizeof(MemoryBlockHeader));
+    extraBlock->left_ptr = (byte*)block - global_malloc_base;
+    extraBlock->right_ptr = 0;
+    block->right_ptr = (byte*)extraBlock - global_malloc_base;
+
     global_print("s", "out of memory\n");
     global_io_flush();
     runtime_panic(__FILE__, __LINE__);
@@ -1112,7 +1135,7 @@ byte* init_global_state(u32 heapSize, u32 miscMemoySize, u32 ioBufferSize) {
         write(STDOUT_FILENO, "initial memory request failed\n", size);
     }
 
-    init_global_malloc(memory, heapSize, print_out_of_memory);
+    init_global_malloc(memory, heapSize, print_out_of_memory, nullptr);
     auto io_base = (byte*)memory + heapSize;
     init_global_print( make_linear_allocator((byte*)io_base, ioBufferSize) );
 

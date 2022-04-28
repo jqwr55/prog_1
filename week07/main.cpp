@@ -5,6 +5,7 @@
 #include <list>
 #include <algorithm>
 
+
 template<typename it0_t, typename it1_t>
 it1_t copy(it0_t src_begin, it1_t src_end, it1_t dst) {
 
@@ -12,6 +13,14 @@ it1_t copy(it0_t src_begin, it1_t src_end, it1_t dst) {
         *dst = *it;
     }
     return dst;
+}
+
+template<typename C>
+void print(const C& c) {
+
+    for(const auto& it : c) {
+        std::cout << it << std::endl;
+    }
 }
 
 i32 main() {
@@ -51,6 +60,9 @@ i32 main() {
     else {
         std::cout << "Not found" << std::endl;
     }
+
+    print(vec);
+    print(list);
 
     return 0;
 }

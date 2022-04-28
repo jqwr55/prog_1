@@ -88,8 +88,6 @@ i32 main(i32 argc, const char** argv) {
 		return 2;
 	}
 
-    global_io_flush();
-    return 0;
-
+    std::cout.flush();
     return 0;
 }

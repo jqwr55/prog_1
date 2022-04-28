@@ -21,7 +21,10 @@ endef
 run: build
 	@$(foreach element,$(BIN_FILES), echo "$(element)\n----"; $(element); echo "----\n";)
 
-build:
+./bins:
+	mkdir bins
+
+build: ./bins
 	make -j6 build_common
 	make -j6 build_main
 	@clear
@@ -30,7 +33,7 @@ build:
 build_main: $(COMMON_OBJ_FILES) $(BIN_FILES)
 build_common: $(COMMON_OBJ_FILES)
 
-clean:
+purge:
 	rm $(BIN_FILES) $(COMMON_OBJ_FILES)
 
 $(foreach element, $(COMMON_SRC_FILES), $(eval $(call make-target-common,$(element))))

@@ -13,6 +13,7 @@ double square(double x) {
 
 void WindowExit (Fl_Widget* widget, void* user) {
 	widget->hide();
+	exit(0);
 }
 
 i32 main() {

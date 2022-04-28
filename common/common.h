@@ -405,9 +405,10 @@ _NO_INLINE
 void runtime_panic(const char* file, u32 line);
 
 // ------------- shared mutable global state BEGIN --------------------
-typedef void(*malloc_handler_t)();
-extern byte *global_malloc_base;
-extern malloc_handler_t global_out_of_memory_handler;
+typedef void(malloc_handler_t)(void*);
+extern byte* global_malloc_base;
+extern malloc_handler_t* global_out_of_memory_handler;
+extern void* global_out_of_memory_user;
 extern LinearAllocator io;
 // ------------- shared mutable global state END ----------------------
 
@@ -428,7 +429,7 @@ MemoryBlockHeader* get_block_ptr(byte* base, u32 smallPtr);
 // observes shared global mutable state
 MemoryBlockHeader *search_free_block(u32 size);
 // mutates shared global state
-void init_global_malloc(void *base_, u32 size, malloc_handler_t handler);
+void init_global_malloc(void *base_, u32 size, malloc_handler_t* handler, void*);
 // mutates shared global state
 
 void* global_malloc(u32 size);
