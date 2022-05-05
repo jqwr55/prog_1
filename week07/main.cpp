@@ -18,7 +18,7 @@ it1_t copy(it0_t src_begin, it1_t src_end, it1_t dst) {
 template<typename C>
 void print(const C& c) {
 
-    std::cout << '{'
+    std::cout << '{';
     for(const auto& it : c) {
         std::cout << it << ", ";
     }
