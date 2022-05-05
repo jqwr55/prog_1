@@ -18,9 +18,11 @@ it1_t copy(it0_t src_begin, it1_t src_end, it1_t dst) {
 template<typename C>
 void print(const C& c) {
 
+    std::cout << '{'
     for(const auto& it : c) {
-        std::cout << it << std::endl;
+        std::cout << it << ", ";
     }
+    std::cout << "}" << std::endl;
 }
 
 i32 main() {
@@ -63,16 +65,19 @@ i32 main() {
             std::cout << "Not found" << std::endl;
         }
 
+        std::cout << "conents of vec " << std::endl;
         print(vec);
+        std::cout << "conents of list " << std::endl;
         print(list);
-    return 0;
+
+        return 0;
 	}
 	catch(std::exception& e) {
 		std::cerr << "exception: " << e.what() << std::endl;
 		return 1;
 	}
 	catch (...) {
-		std::cerr << "Some exception" << std::endl;
+		std::cerr << "uknown  exception caught" << std::endl;
 		return 2;
 	}
 
