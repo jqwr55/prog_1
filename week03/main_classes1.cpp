@@ -68,16 +68,27 @@ void f(B2& b2) {
 
 i32 main(i32 argc, const char** argv) {
 
-    D2 d2;
-    d2.f();
-    d2.vf();
-    d2.pvf();
+	try {
 
-    D21 d21;
-    D22 d22;
-    f(d21);
-    f(d22);
+        D2 d2;
+        d2.f();
+        d2.vf();
+        d2.pvf();
 
-    std::cout.flush();
+        D21 d21;
+        D22 d22;
+        f(d21);
+        f(d22);
+
+	    return 0;
+	}
+	catch(std::exception& e) {
+		std::cerr << "exception caught " << e.what() << std::endl;
+		return 1;
+	}
+	catch(...) {
+		std::cerr << "Uknown exception" << std::endl;
+		return 2;
+	}
     return 0;
 }

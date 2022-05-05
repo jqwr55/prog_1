@@ -85,18 +85,17 @@ i32 main(i32 argc, const char** argv) {
             py += dy;
             serious_fren->move(dx, dy);
         }
+        return 0;
     }
     catch(std::exception& e) {
-        std::cout << e.what() << '\n';
-	    std::cout.flush();
+        std::cerr << e.what() << std::endl;
 		return 1;
 	}
 	catch(...) {
-        std::cout << "uknown exception caught\n";
-	    std::cout.flush();
+        std::cerr << "uknown exception caught" << std::endl;
 		return 2;
 	}
 
-    std::cout.flush();
+
     return 0;
 }

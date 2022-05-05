@@ -25,44 +25,55 @@ void print(const C& c) {
 
 i32 main() {
 
-    i32 arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::vector<i32> vec = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    std::list<i32> list = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    try {
 
-    i32 arr2[SIZE_OF_ARRAY(arr)];
-    copy(arr2, arr2+10, arr);
+        i32 arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        std::vector<i32> vec = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        std::list<i32> list = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    std::vector<i32> vec2 = vec;
-    std::list<i32> list2 = list;
+        i32 arr2[SIZE_OF_ARRAY(arr)];
+        copy(arr2, arr2+10, arr);
 
-    std::for_each(arr2, arr2+10, 
-        [](i32& v) {v+=2;});
-    std::for_each(vec.begin(), vec.end(), 
-        [](i32& v) {v+=3;});
-    std::for_each(list.begin(), list.end(), 
-        [](i32& v) {v+=5;});
+        std::vector<i32> vec2 = vec;
+        std::list<i32> list2 = list;
 
-    copy(arr, arr+10, vec.begin());
-    copy(list.begin(), list.end(), arr);
+        std::for_each(arr2, arr2+10, 
+            [](i32& v) {v+=2;});
+        std::for_each(vec.begin(), vec.end(), 
+            [](i32& v) {v+=3;});
+        std::for_each(list.begin(), list.end(), 
+            [](i32& v) {v+=5;});
 
-    auto posVec = std::find(vec.begin(), vec.end(), 3);
-    if(posVec != vec.end()) {
-        std::cout << "vec contains the value 3 at: " << std::distance(posVec, vec.end()) << std::endl;
-    }
-    else {
-        std::cout << "Not found" << std::endl;
-    }
+        copy(arr, arr+10, vec.begin());
+        copy(list.begin(), list.end(), arr);
 
-    auto posList = std::find(list.begin(), list.end(), 27);
-    if(posList != list.end()) {
-        std::cout << "list contains the value 27 at: " << std::distance(posList, list.end()) << std::endl;
-    }
-    else {
-        std::cout << "Not found" << std::endl;
-    }
+        auto posVec = std::find(vec.begin(), vec.end(), 3);
+        if(posVec != vec.end()) {
+            std::cout << "vec contains the value 3 at: " << std::distance(posVec, vec.end()) << std::endl;
+        }
+        else {
+            std::cout << "Not found" << std::endl;
+        }
 
-    print(vec);
-    print(list);
+        auto posList = std::find(list.begin(), list.end(), 27);
+        if(posList != list.end()) {
+            std::cout << "list contains the value 27 at: " << std::distance(posList, list.end()) << std::endl;
+        }
+        else {
+            std::cout << "Not found" << std::endl;
+        }
 
+        print(vec);
+        print(list);
     return 0;
+	}
+	catch(std::exception& e) {
+		std::cerr << "exception: " << e.what() << std::endl;
+		return 1;
+	}
+	catch (...) {
+		std::cerr << "Some exception" << std::endl;
+		return 2;
+	}
+
 }

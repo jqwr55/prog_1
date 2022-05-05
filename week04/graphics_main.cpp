@@ -67,18 +67,15 @@ i32 main(i32 argc, const char** argv) {
 
         myWindow.wait_for_button();
 
+        return 0;
     }
     catch(std::exception& e) {
-        std::cout << e.what();
-        std::cout.flush();
+        std::cerr << e.what() << std::endl;
 		return 1;
 	}
 	catch(...) {
-        std::cout << "uknown exception caught";
-        std::cout.flush();
+        std::cout << "uknown exception caught" << std::endl;
 		return 2;
 	}
 
-    std::cout.flush();
-    return 0;
 }

@@ -29,19 +29,29 @@ class D1 : public B1 {
 
 i32 main(i32 argc, const char** argv) {
 
-    B1 b1;
-    b1.f();
-    b1.vf();
+    try {
 
-    D1 d1;
-    d1.f();
-    d1.vf();
+        B1 b1;
+        b1.f();
+        b1.vf();
 
-    B1& b1Ref = d1;
-    b1Ref.f();
-    b1Ref.vf();
+        D1 d1;
+        d1.f();
+        d1.vf();
 
-    std::cout.flush();
+        B1& b1Ref = d1;
+        b1Ref.f();
+        b1Ref.vf();
+		return 0;
+	}
+	catch(std::exception& e) {
+		std::cerr << "exception caught " << e.what() << std::endl;
+		return 1;
+	}
+	catch(...) {
+		std::cerr << "Uknown exception" << std::endl;
+		return 2;
+	}
 
     return 0;
 }

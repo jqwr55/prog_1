@@ -18,62 +18,72 @@ void WindowExit (Fl_Widget* widget, void* user) {
 
 i32 main() {
 
-	i32 xmax = 1280;
-    i32 ymax = 720;
+	try {
 
-    i32 x_orig = xmax/2;
-    i32 y_orig = ymax/2;
+		i32 xmax = 1280;
+		i32 ymax = 720;
 
-    i32 rmin = -11;
-    i32 rmax = 11;
-    
-    i32 n_points = 400;
+		i32 x_orig = xmax/2;
+		i32 y_orig = ymax/2;
 
-    Simple_window win {Point{100,100}, xmax, ymax, "Canvas"};
-	win.callback(WindowExit);
-	Point origo {x_orig, y_orig};
+		i32 rmin = -11;
+		i32 rmax = 11;
+		
+		i32 n_points = 400;
 
-	i32 xlength = xmax - 40;
-	i32 ylength = ymax - 40;
+		Simple_window win {Point{100,100}, xmax, ymax, "Canvas"};
+		win.callback(WindowExit);
+		Point origo {x_orig, y_orig};
 
-	i32 xscale = 30, yscale = 30;
+		i32 xlength = xmax - 40;
+		i32 ylength = ymax - 40;
 
-	Function s (one, rmin, rmax, origo, n_points, xscale, yscale);
-	Function sq (square, rmin, rmax, origo, n_points, xscale, yscale);
-	Function cos_func ( [] (double x) { return cos(x); },
-						rmin, rmax, origo, n_points, xscale, yscale);
+		i32 xscale = 30, yscale = 30;
 
-	Axis x {Axis::x, Point{20, y_orig}, xlength, xlength/xscale, "x"};
-	Axis y {Axis::y, Point{x_orig, ylength + 20}, ylength, ylength/yscale, "y"};
+		Function s (one, rmin, rmax, origo, n_points, xscale, yscale);
+		Function sq (square, rmin, rmax, origo, n_points, xscale, yscale);
+		Function cos_func ( [] (double x) { return cos(x); },
+							rmin, rmax, origo, n_points, xscale, yscale);
 
-	Rectangle r {Point{200,200}, 100, 50};
+		Axis x {Axis::x, Point{20, y_orig}, xlength, xlength/xscale, "x"};
+		Axis y {Axis::y, Point{x_orig, ylength + 20}, ylength, ylength/yscale, "y"};
 
-	r.set_fill_color(Graph_lib::Color::yellow);
-	r.set_style( Line_style( Line_style::dash, 4));
+		Rectangle r {Point{200,200}, 100, 50};
 
-	Text t {Point{200,400}, "Hello graphics!"};
-	t.set_font( Graph_lib::Font::times_bold);
-	t.set_font_size(20);
+		r.set_fill_color(Graph_lib::Color::yellow);
+		r.set_style( Line_style( Line_style::dash, 4));
 
-	Image ii {Point{100,100}, "./week01/badge.jpg", Suffix::jpg};
+		Text t {Point{200,400}, "Hello graphics!"};
+		t.set_font( Graph_lib::Font::times_bold);
+		t.set_font_size(20);
 
-	Circle c {Point{700,700}, 100};
+		Image ii {Point{100,100}, "./week01/badge.jpg", Suffix::jpg};
 
-	Ellipse e {Point{500,500}, 100, 50};
-	e.set_fill_color(Color::red);
+		Circle c {Point{700,700}, 100};
 
-	win.attach(e);
-	win.attach(ii);
-	win.attach(c);
-	win.attach(t);
-	win.attach(r);
-	win.attach(s);
-	win.attach(sq);
-	win.attach(cos_func);
-	win.attach(x);
-	win.attach(y);
+		Ellipse e {Point{500,500}, 100, 50};
+		e.set_fill_color(Color::red);
 
-    win.wait_for_button();
+		win.attach(e);
+		win.attach(ii);
+		win.attach(c);
+		win.attach(t);
+		win.attach(r);
+		win.attach(s);
+		win.attach(sq);
+		win.attach(cos_func);
+		win.attach(x);
+		win.attach(y);
 
-    return 0;
+		win.wait_for_button();
+		return 0;
+	}
+	catch(std::exception& e) {
+		std::cerr << "exception caught " << e.what() << std::endl;
+		return 1;
+	}
+	catch(...) {
+		std::cerr << "Uknown exception" << std::endl;
+		return 2;
+	}
 }

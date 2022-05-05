@@ -113,11 +113,11 @@ i32 main(i32 argc, const char** argv) {
 		return gui_main();
 	}
 	catch(std::exception& e) {
-		cerr << "exception: " << e.what() << '\n';
+		cerr << "exception: " << e.what() << std::endl;
 		return 1;
 	}
 	catch (...) {
-		cerr << "Some exception\n";
+		cerr << "Some exception" << std::endl;
 		return 2;
 	}
 

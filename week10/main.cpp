@@ -34,16 +34,17 @@ i32 main() {
         std::cout << "c:\t" << c.size() << '\n';
         std::cout << "d:\t" << d.size() << '\n';
         std::cout << "e:\t" << e.size() << '\n';
+
+        std::cout.flush();
+        return 0;
     }
     catch(std::exception& e) {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << std::endl;
         return 1;
     }
     catch(...) {
-        std::cerr << "uknown exception\n";
+        std::cerr << "uknown exception" << std::endl;
         return 2;
     }
 
-    std::cout.flush();
-    return 0;
 }

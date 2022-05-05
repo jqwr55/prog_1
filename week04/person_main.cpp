@@ -78,6 +78,7 @@ i32 main(i32 argc, const char** argv) {
 
         // Person error test
         Person("%", "Goofy", 10);
+       return 0;
     }
     catch(std::exception& e) {
 	    std::cerr << e.what() << std::endl;
@@ -88,6 +89,4 @@ i32 main(i32 argc, const char** argv) {
 		return 2;
 	}
 
-    std::cout.flush();
-    return 0;
 }

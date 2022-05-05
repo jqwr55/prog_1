@@ -51,34 +51,45 @@ void read_val(T& v) {
 
 i32 main() {
 
-    S<i32> s0(0);
-    S<char> s1('q');
-    S<f64> s2 = 3.14;
-    S<std::string> s3("Hello");
-    S<std::vector<i32>> s4({0,1,2,3,4});
+    try {
+        S<i32> s0(0);
+        S<char> s1('q');
+        S<f64> s2 = 3.14;
+        S<std::string> s3("Hello");
+        S<std::vector<i32>> s4({0,1,2,3,4});
 
-    std::cout << s0.GetVal() << std::endl;
-    std::cout << s1.GetVal() << std::endl;
-    std::cout << s2.GetVal() << std::endl;
-    std::cout << s3.GetVal() << std::endl;
-    std::cout << s4.GetVal() << std::endl;
+        std::cout << s0.GetVal() << std::endl;
+        std::cout << s1.GetVal() << std::endl;
+        std::cout << s2.GetVal() << std::endl;
+        std::cout << s3.GetVal() << std::endl;
+        std::cout << s4.GetVal() << std::endl;
 
-    std::cout << "enter an int" << std::endl;
-    read_val(s0);
-    std::cout << "enter a char" << std::endl;
-    read_val(s1);
-    std::cout << "enter a double" << std::endl;
-    read_val(s2);
-    std::cout << "enter a string" << std::endl;
-    read_val(s3);
-    std::cout << "enter multiple ints" << std::endl;
-    read_val(s4);
+        std::cout << "enter an int" << std::endl;
+        read_val(s0);
+        std::cout << "enter a char" << std::endl;
+        read_val(s1);
+        std::cout << "enter a double" << std::endl;
+        read_val(s2);
+        std::cout << "enter a string" << std::endl;
+        read_val(s3);
+        std::cout << "enter multiple ints" << std::endl;
+        read_val(s4);
 
-    std::cout << s0.GetVal() << std::endl;
-    std::cout << s1.GetVal() << std::endl;
-    std::cout << s2.GetVal() << std::endl;
-    std::cout << s3.GetVal() << std::endl;
-    std::cout << s4.GetVal() << std::endl;
+        std::cout << s0.GetVal() << std::endl;
+        std::cout << s1.GetVal() << std::endl;
+        std::cout << s2.GetVal() << std::endl;
+        std::cout << s3.GetVal() << std::endl;
+        std::cout << s4.GetVal() << std::endl;
+    
+        return 0;
+	}
+	catch(std::exception& e) {
+		std::cerr << "exception: " << e.what() << std::endl;
+		return 1;
+	}
+	catch (...) {
+		std::cerr << "Some exception" << std::endl;
+		return 2;
+	}
 
-    return 0;
 }

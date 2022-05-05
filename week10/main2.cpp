@@ -21,6 +21,7 @@ i32 main() {
             }
         }
 
+        std::cout << "Enter 10 floats" << std::endl;
         Numeric_lib::Matrix<f64> mat(10);
         for(u32 i = 0; i < 10; i++) {
             f64 n;
@@ -29,6 +30,7 @@ i32 main() {
         }
         std::cout << mat << std::endl;
 
+        std::cout << "Enter dimensions of multiplication table(n,m)" << std::endl;
         i32 n;
         i32 m;
         std::cin >> n >> m;
@@ -40,23 +42,31 @@ i32 main() {
         }
         std::cout << table << std::endl;
 
+        std::cout << "Enter 10 complex<float> number (r,i)" << std::endl;
         Numeric_lib::Matrix<std::complex<f64>> complexes(10);
         std::complex<f64> sum{};
         for(u32 i = 0; i < 10; i++) {
             std::cin >> complexes[i];
             sum += complexes[i];
         }
-        std::cout << "sum " << sum << " complexes " << complexes << std::endl;
+        std::cout << "sum of complexes " << sum << ". complexes:\n" << complexes << std::endl;
 
+        std::cout << "Enter 6 integer numbers" << std::endl;
         Numeric_lib::Matrix<int,2> matInt(2,3);
         for(u32 i = 0; i < 6; i++) {
             std::cin >> matInt[i / 3][i % 3];
         }
         std::cout << matInt << std::endl;
+        
+        return 0;
     }
     catch(std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return 1;
     }
     catch(...) {
+        std::cerr << "uknown exception" << std::endl;
+        return 2;
     }
 
     return 0;
