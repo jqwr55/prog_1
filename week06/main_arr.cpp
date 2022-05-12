@@ -130,10 +130,6 @@ i32 main() {
         S< i32[5] > s1;
         S< std::array<char, 5> > s2;
 
-        char s3[5];
-        std::cin >> s3;
-
-        /*
         std::cin >> s0;
         std::cout << s0 << std::endl;
 
@@ -142,7 +138,6 @@ i32 main() {
 
         std::cin >> s2;
         std::cout << s2 << std::endl;
-        */
 
         return 0;
 	}
