@@ -5,7 +5,6 @@
 #include <list>
 #include <algorithm>
 
-
 template<typename it0_t, typename it1_t>
 it1_t copy(it0_t src_begin, it1_t src_end, it1_t dst) {
 

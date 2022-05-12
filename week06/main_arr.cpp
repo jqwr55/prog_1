@@ -44,6 +44,9 @@ std::istream& operator >> (std::istream& os, std::vector<T>& v) {
     for(T i; os >> i;) {
         v.push_back(i);
     }
+
+    os.clear();
+    os.ignore();
     return os;
 }
 
@@ -56,11 +59,6 @@ template <typename T>
 std::istream& operator >> (std::istream& os, S<T>& v) {
     os >> v.GetVal();
     return os;
-}
-
-template<typename T>
-void read_val(T& v) {
-    std::cin >> v.GetVal();
 }
 
 template<typename T, u32 n, typename = std::enable_if_t< !std::is_same<T, char>::value> >
@@ -78,7 +76,17 @@ std::istream& operator >> (std::istream& os, T(&v)[n] ) {
 
     for(u32 i = 0; i < n; i++) {
         T val;
-        os >> val;
+
+        if( !(os >> val) ) {
+            
+            os.clear();
+            os.ignore();
+
+            for(; i < n; i++) {
+                v[i] = {};
+            }
+            break;
+        }
         v[i] = val;
     }
     return os;
@@ -99,7 +107,16 @@ std::istream& operator >> (std::istream& os, std::array<T, n>& v) {
 
     for(u32 i = 0; i < n; i++) {
         T val;
-        os >> val;
+        if(!(os >> val)) {
+
+            os.clear();
+            os.ignore();
+
+            for(; i < n; i++) {
+                v[i] = {};
+            }
+            break;
+        }
         v[i] = val;
     }
     return os;
@@ -109,35 +126,24 @@ i32 main() {
 
     try {
 
-        S<i32> s0(0);
-        S<char> s1('q');
-        S<f64> s2 = 3.14;
-        S<std::string> s3("Hello");
-        S<std::vector<i32>> s4({0,1,2,3,4});
+        S<std::array<i32, 5>> s0;
+        S< i32[5] > s1;
+        S< std::array<char, 5> > s2;
 
-        std::cout << s0.GetVal() << std::endl;
-        std::cout << s1.GetVal() << std::endl;
-        std::cout << s2.GetVal() << std::endl;
-        std::cout << s3.GetVal() << std::endl;
-        std::cout << s4.GetVal() << std::endl;
+        char s3[5];
+        std::cin >> s3;
 
-        std::cout << "enter an int" << std::endl;
-        read_val(s0);
-        std::cout << "enter a char" << std::endl;
-        read_val(s1);
-        std::cout << "enter a double" << std::endl;
-        read_val(s2);
-        std::cout << "enter a string" << std::endl;
-        read_val(s3);
-        std::cout << "enter multiple ints" << std::endl;
-        read_val(s4);
+        /*
+        std::cin >> s0;
+        std::cout << s0 << std::endl;
 
-        std::cout << s0.GetVal() << std::endl;
-        std::cout << s1.GetVal() << std::endl;
-        std::cout << s2.GetVal() << std::endl;
-        std::cout << s3.GetVal() << std::endl;
-        std::cout << s4.GetVal() << std::endl;
-    
+        std::cin >> s1;
+        std::cout << s1 << std::endl;
+
+        std::cin >> s2;
+        std::cout << s2 << std::endl;
+        */
+
         return 0;
 	}
 	catch(std::exception& e) {
