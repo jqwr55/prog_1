@@ -32,7 +32,7 @@ struct My_Lines_window : Graph_lib::Window {
 		void red_pressed() { change_color(Color::red); hide_color_menu(); }
 		void blue_pressed() { change_color(Color::blue); hide_color_menu(); }
 		void black_pressed() { change_color(Color::black); hide_color_menu(); }
-		
+
 		void solid_pressed() { change_style(Line_style::solid); hide_style_menu(); }
 		void dash_pressed() { change_style(Line_style::dash); hide_style_menu(); }
 		void dot_pressed() { change_style(Line_style::dot); hide_style_menu(); }
@@ -107,6 +107,7 @@ My_Lines_window::My_Lines_window(Point xy, int w, int h, const string& title)
 }
 
 i32 main(i32 argc, const char** argv) {
+
 
     try {
 		My_Lines_window win{Point{100, 100}, 600, 400, "lines"};

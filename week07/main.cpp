@@ -6,10 +6,22 @@
 #include <algorithm>
 
 template<typename it0_t, typename it1_t>
-it1_t copy(it0_t src_begin, it1_t src_end, it1_t dst) {
+it1_t my_copy(it0_t src_begin, it0_t src_end, it1_t dst) {
 
     for(it0_t it = src_begin; it != src_end; it++,dst++) {
         *dst = *it;
+    }
+    return dst;
+}
+template<typename it0_t, typename it1_t, typename P>
+it1_t my_copy_if(it0_t src_begin, it0_t src_end, it1_t dst, P Predicate) {
+
+    for(it0_t it = src_begin; it != src_end; it++) {
+
+        if(Predicate(it)) {
+            *dst = *it;
+            dst++;
+        }
     }
     return dst;
 }
@@ -33,7 +45,7 @@ i32 main() {
         std::list<i32> list = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
         i32 arr2[SIZE_OF_ARRAY(arr)];
-        copy(arr2, arr2+10, arr);
+        my_copy(arr2, arr2+10, arr);
 
         std::vector<i32> vec2 = vec;
         std::list<i32> list2 = list;
@@ -45,8 +57,9 @@ i32 main() {
         std::for_each(list.begin(), list.end(), 
             [](i32& v) {v+=5;});
 
-        copy(arr, arr+10, vec.begin());
-        copy(list.begin(), list.end(), arr);
+        // i32[10] decay to i32*
+        my_copy(arr + 0, arr+10, vec.begin());
+        my_copy(list.begin(), list.end(), arr);
 
         auto posVec = std::find(vec.begin(), vec.end(), 3);
         if(posVec != vec.end()) {

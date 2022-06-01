@@ -4,9 +4,7 @@
 #include <exception>
 #include <string>
 
-void MakeGrid(std::vector<Line*>& lines, Point topLeft, Point bottomRight, u32 xLineCount, u32 yLineCount) {
-
-    lines.reserve(xLineCount * yLineCount);
+void MakeGrid(Vector_ref<Line>& lines, Point topLeft, Point bottomRight, u32 xLineCount, u32 yLineCount) {
 
     i32 sizeX = bottomRight.x - topLeft.x;
     i32 sizeY = bottomRight.y - topLeft.y;
@@ -33,35 +31,34 @@ i32 main(i32 argc, const char** argv) {
 
         i32 xmax = 800;
 		i32 ymax = 1000;
-		Simple_window myWindow{Point{100,100}, xmax, ymax, "Canvas"};
-        myWindow.set_label("week02");
+		Simple_window myWindow{Point{100,100}, xmax, ymax, "week02"};
         myWindow.callback(WindowExit);
 
-        std::vector<Line*> lines;
+        Vector_ref<Line> lines;
         MakeGrid(lines, {0, 0}, {800, 800}, 8, 8);
-        for(auto i : lines) myWindow.attach(*i);
-
-        std::vector<Rectangle*> redSquares;
-        redSquares.reserve(8);
-
-        for(u32 i = 0; i < 8; i++) {
-            redSquares.push_back(new Rectangle{ {i*100, i * 100}, 100, 100});
-            redSquares[i]->set_fill_color(Color::red);
-            myWindow.attach(*redSquares[i]);
+        for(u32 i = 0; i < lines.size(); i++) {
+            myWindow.attach(lines[i]);
         }
 
-        std::vector<Image*> frens;
-        frens.reserve(4);
+        Vector_ref<Rectangle> redSquares;
+        for(u32 i = 0; i < 8; i++) {
+            redSquares.push_back(new Rectangle{ {i*100, i * 100}, 100, 100});
+            redSquares[i].set_fill_color(Color::red);
+            myWindow.attach(redSquares[i]);
+        }
+
+        Vector_ref<Image> frens;
         frens.push_back(new Image{{0 ,600}, "./week02/fren.jpg", Suffix::jpg});
         frens.push_back(new Image{{0 ,200}, "./week02/fren.jpg", Suffix::jpg});
         frens.push_back(new Image{{400 ,100}, "./week02/fren.jpg", Suffix::jpg});
         frens.push_back(new Image{{0 ,0}, "./week02/serious_fren.jpg", Suffix::jpg});
-        auto serious_fren = frens.back();
+        auto& serious_fren = frens.back();
 
-        for(auto i : frens) myWindow.attach(*i);
+        for(u32 i = 0; i < frens.size(); i++) {
+            myWindow.attach(frens[i]);
+        }
 
-        std::cout << "Press the exit to exit\n";
-        std::cout.flush();
+        std::cout << "Press the exit to exit" << std::endl;
         i32 px = 0;
         i32 py = 0;
 
@@ -83,7 +80,7 @@ i32 main(i32 argc, const char** argv) {
 
             px += dx;
             py += dy;
-            serious_fren->move(dx, dy);
+            serious_fren.move(dx, dy);
         }
         return 0;
     }

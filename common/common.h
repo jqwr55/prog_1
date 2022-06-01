@@ -64,6 +64,7 @@ constexpr u64 CACHE_LINE_SIZE = 64;
     #define _LIKELY(x)          __bultin_expect(x, 1)
     #define _UN_LIKELY(x)       __bultin_expect(x, 0)
 
+    /*
     template <typename T>
     using v2 = T __attribute__((vector_size(sizeof(T) * 2)));
     template <typename T>
@@ -73,6 +74,7 @@ constexpr u64 CACHE_LINE_SIZE = 64;
 
     typedef v2<u64> bit_mask128;
     typedef v4<u64> bit_mask256;
+    */
 #else
     #ifdef _MSC_VER
     #endif
@@ -1032,7 +1034,8 @@ struct StaticBufferLocal {
     }
 };
 
-template<typename T> struct SmallStaticBuffer2 {
+template<typename T>
+struct SmallStaticBuffer2 {
     u32 memory;
     u32 size;
     void Init(byte* base, T* memory_, u32 size_) {

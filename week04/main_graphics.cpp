@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-void WindowExit (Fl_Widget* widget, void* user) {
+void WindowExit(Fl_Widget* widget, void* user) {
 
     std::cout.flush();
     exit(0);
@@ -32,11 +32,11 @@ i32 main(i32 argc, const char** argv) {
         i32 ymax = 600;
         Point center{xmax/2, ymax/2};
 
-        int rangeMin = -10;
-        int rangeMax = 11;
-        int n = 400;
-        int scaleX = 20;
-        int scaleY = 20;
+        i32 rangeMin = -10;
+        i32 rangeMax = 11;
+        i32 n = 400;
+        i32 scaleX = 20;
+        i32 scaleY = 20;
 
         Function s0{One, rangeMin, rangeMax, center, n, scaleX, scaleY};
         Function s1{Slope, rangeMin, rangeMax, center, n, scaleX, scaleY};
@@ -45,8 +45,7 @@ i32 main(i32 argc, const char** argv) {
         Function s4{SlopingCos, rangeMin, rangeMax, center, n, scaleX, scaleY};
         s3.set_color(Color::blue);
 
-		Simple_window myWindow{Point{100,100}, xmax, ymax, "Canvas"};
-        myWindow.set_label("Function graphs");
+		Simple_window myWindow{Point{100,100}, xmax, ymax, "Function graphs"};
         myWindow.callback(WindowExit);
 
         Axis xAxis{Axis::x, center - Point{200, 0}, 400, 20, "1 == 20 pixels"};

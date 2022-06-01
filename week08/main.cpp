@@ -44,8 +44,14 @@ void read_into_map_from_cin(std::map<T0, T1>& map) {
     T0 i0;
     T1 i1;
     for(; std::cin >> i0 >> i1;) {
+
+        if(std::cin.bad()) {
+            break;
+        }
         map[i0] = i1;
     }
+    std::cin.clear();
+    std::cin.ignore();
 }
 template<typename T0, typename T1>
 void print_map(std::map<T0,T1>& map) {
@@ -60,7 +66,7 @@ void print_vector(const std::vector<T>& vec) {
     }
 }
 
-i32 main() {
+i32 main(i32 argc, const char* argv[]) {
     
     try {
 
@@ -99,11 +105,13 @@ i32 main() {
 
         // ---- list ----
         std::list<Item> li;
-        file.seekg(std::ios::beg);
+        file.close();
+        file.open("./week08/items");
         for(Item i; file >> i; li.push_back(i));
+        file.close();
 
 
-        std::cout << "li contents" << std::endl;
+        std::cout << "\nli contents" << std::endl;
         for(auto it = li.rbegin(); it != li.rend(); it++) {
             std::cout << *it << std::endl;
         }
@@ -124,29 +132,35 @@ i32 main() {
             msi[i.name] = i.iid;
         }
 
-        std::cout << "msi contents" << std::endl;
+        std::cout << "\nmsi contents" << std::endl;
         print_map(msi);
 
         msi.clear();
+        std::cout << "\nEnter (string, int) pairs" << std::endl;
         read_into_map_from_cin(msi);
+        std::cout << std::endl;
         int sum = 0;
+
+        std::cout << "msi contents" << std::endl;
         for(auto& i : msi) {
             std::cout << i.first << ' ' << i.second << std::endl;
             sum += i.second;
         }
+        std::cout << "Sum: " << sum << std::endl;
 
         // ---- map 2 ----
-        std::cout << "Sum: " << sum << std::endl;
         std::map<int, std::string> mis;
         for(auto& i : msi) {
             mis[i.second] = i.first;
         }
 
         // ---- vector ----
+        std::cout << "\nfloat file(vd) contents" << std::endl;
         std::vector<f64> vd;
         std::ifstream floatFile("./week08/floats");
-        for(f64 i; file >> i; vd.push_back(i));
+        for(f64 i; floatFile >> i; vd.push_back(i));
         print_vector(vd);
+        std::cout << std::endl;
 
         std::cout << "(vd[i] vi2[i])" << std::endl;
         std::vector<int> vi2;
@@ -160,7 +174,7 @@ i32 main() {
         }
         std::cout << "vd sum: " << vdSum << " vi2 sum: " << vi2Sum << " diff: " << vdSum - (f64)vi2Sum << std::endl;
 
-        std::cout << "vd reversed" << std::endl;
+        std::cout << "\nvd reversed" << std::endl;
         std::reverse(vd.begin(), vd.end());
         print_vector(vd);
 
@@ -175,7 +189,7 @@ i32 main() {
         }
         std::sort(vd2.begin(), vd2.end());
 
-        std::cout << "vd2 contents" << std::endl;
+        std::cout << "\nvd2 contents" << std::endl;
         print_vector(vd2);
 
         return 0;
